@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import db from "./database";
-import { RowDataPacket } from "mysql2";
+import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 export async function getAllCardsController(_: Request, res: Response) {
   try {
@@ -25,8 +25,8 @@ export async function getCardByIdController(req: Request, res: Response) {
 
 export async function createCardController(req: Request, res: Response) {
   try {
-    await db.query('INSERT INTO cards SET ?', [req.body]);
-    res.status(201).json({message: 'Card created successfully'});
+    const [{ insertId: id }] = await db.query<ResultSetHeader>('INSERT INTO cards SET ?', [req.body]);
+    res.status(201).json({message: 'Card created successfully', id});
   } catch (error) {
     res.status(500).json(error);
   }
@@ -44,7 +44,7 @@ export async function updateCardController(req: Request, res: Response) {
 export async function deleteCardController(req: Request, res: Response) {
   try {
     await db.query('DELETE FROM cards WHERE id = ?', [req.params.id]);
-    res.status(204).json({message: 'Card deleted successfully'});
+    res.status(204).end();
   } catch (error) {
     res.status(500).json(error);
   }
