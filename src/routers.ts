@@ -9,14 +9,16 @@ import {
 
 const router = Router();
 
-router.get('/', getAllCardsController)
+router.get('/card', getAllCardsController)
 
-router.get('/:id', getCardByIdController)
+router.get('/card/:id', getCardByIdController)
 
-router.post('/', createCardController)
+router.post('/card', createCardController)
 
-router.put('/:id', updateCardController)
+router.put('/card/:id', updateCardController)
 
-router.delete('/:id', deleteCardController)
+router.delete('/card/:id', deleteCardController)
+
+router.get('/teste', (_, res) => res.json({message: 'Teste de rota API'}));
 
 export default router;
