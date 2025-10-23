@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import db from "./database";
+import db from "./database.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 export async function getAllCardsController(_: Request, res: Response) {
